@@ -11,6 +11,15 @@ object TimeUtils {
     fun endDate(): String? {
        return addDays(today(),4)
     }
+    fun secondDay():String?{
+        return addDays(today(),2)
+    }
+    fun thirdDay():String?{
+        return addDays(today(),3)
+    }
+    fun fourthDay():String?{
+        return addDays(today(),4)
+    }
     fun addDays(startDate: String?, numberOfDays: Int): String? {
         val dateFormat =
             SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
