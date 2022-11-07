@@ -22,8 +22,18 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_dates"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:hint="Date"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold" />
     <TextView
-        android:id="@+id/tv_past_time"
+        android:id="@+id/tv_max_temp"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
@@ -33,7 +43,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/tv_next_temp"
+        android:id="@+id/tv_min_temp"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
@@ -41,15 +51,7 @@
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold" />
-    <TextView
-        android:id="@+id/tv_next_wind_speed"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:hint="Wind Speed"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+
     </LinearLayout>
     </androidx.cardview.widget.CardView>
 

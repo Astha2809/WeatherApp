@@ -1,7 +1,6 @@
 package com.example.weatherapp.ui
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
@@ -9,7 +8,11 @@ import android.os.Bundle
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.weatherapp.adapter.WeatherAdapter
 import com.example.weatherapp.databinding.ActivityMainBinding
+import com.example.weatherapp.model.WeatherApiResponse
 import com.example.weatherapp.utils.Resource
 import com.example.weatherapp.utils.TimeUtils
 import com.example.weatherapp.viewmodel.WeatherViewModel
@@ -20,6 +23,8 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityMainBinding
+    private lateinit var layoutManager: LinearLayoutManager
+    private  var weatherAdapter:WeatherAdapter= WeatherAdapter()
     private val weatherViewModel: WeatherViewModel by lazy {
         ViewModelProvider(this)[WeatherViewModel::class.java]
     }
@@ -62,6 +67,7 @@ class MainActivity : AppCompatActivity() {
 
                 }
             }
+setUpRecyclerView()
         setContentView(mBinding.root)
 
     }
@@ -78,6 +84,12 @@ class MainActivity : AppCompatActivity() {
                         mBinding.tvCurrentTemp.text= "Current Temp:${currentWeatherDetails?.temperature.toString()}"
                         mBinding.tvCurrentTime.text="Time:${currentWeatherDetails?.time.toString()}"
                         mBinding.tvWindSpeed.text="Windspeed:${currentWeatherDetails?.windspeed.toString()}"
+                        //response.data?.let { createPastTempList(it) }
+                        response.data?.let { createPastMaxTempList(it) }
+                            ?.let { weatherAdapter.addMaxTempData(it) }
+                        response.data?.let { createPastMinTempList(it) }
+                            ?.let { weatherAdapter.addMinTempData(it) }
+                        weatherAdapter.addListOfDates(createListOfDates())
                     }
                     is Resource.Error->{
                         Log.i("Error occured",response.message.toString())
@@ -90,6 +102,39 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+    }
+    private fun setUpRecyclerView(){
+        layoutManager= GridLayoutManager(this,4)
+        mBinding.rvWeatherPastDays.layoutManager=layoutManager
+        mBinding.rvWeatherPastDays.adapter=weatherAdapter
+
+
+    }
+    fun createPastMaxTempList(response:WeatherApiResponse):ArrayList<Double>{
+        var list:ArrayList<Double> = arrayListOf()
+//        for(i in 0..5)
+//            response.daily.temperature2mMax.get(i).let { list.add(it) }
+//        response.daily.temperature2mMax.forEach {
+//            list.add(it)
+//        }
+        list=weatherViewModel.createPastMaxTempList(response)
+        return list
+    }
+
+    fun createPastMinTempList(response:WeatherApiResponse):ArrayList<Double>{
+        var list:ArrayList<Double> = arrayListOf()
+////        for(i in 0..5)
+////            response.daily.temperature2mMax.get(i).let { list.add(it) }
+//        response.daily.temperature2mMin.forEach {
+//            list.add(it)
+//        }
+       list= weatherViewModel.createPastMinTempList(response)
+        return list
+    }
+
+    fun createListOfDates():ArrayList<String>{
+        val list=weatherViewModel.createListOfDates()
+        return list
     }
 
 }
