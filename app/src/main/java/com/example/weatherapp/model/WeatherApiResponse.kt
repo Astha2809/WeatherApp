@@ -15,8 +15,8 @@ data class WeatherApiResponse (
     @SerializedName("current_weather"       ) var currentWeather       : CurrentWeather? = CurrentWeather(),
     @SerializedName("hourly_units"          ) var hourlyUnits          : HourlyUnits?    = HourlyUnits(),
     @SerializedName("hourly"                ) var hourly               : Hourly?         = Hourly(),
-    @SerializedName("daily_units"           ) var dailyUnits           : DailyUnits?     = DailyUnits(),
-    @SerializedName("daily"                 ) var daily                : Daily?          = Daily()
+    @SerializedName("daily_units"           ) var dailyUnits           : DailyUnits   = DailyUnits(),
+    @SerializedName("daily"                 ) var daily                : Daily        = Daily()
 
 )
 

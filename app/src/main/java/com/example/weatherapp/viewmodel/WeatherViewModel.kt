@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.example.weatherapp.model.WeatherApiResponse
 import com.example.weatherapp.model.WeatherRepository
 import com.example.weatherapp.utils.Resource
+import com.example.weatherapp.utils.TimeUtils
 import retrofit2.Response
 
 class WeatherViewModel:ViewModel() {
@@ -28,5 +29,36 @@ class WeatherViewModel:ViewModel() {
             }
         }
         return Resource.Error(response.message())
+    }
+
+
+    fun createPastMinTempList(response:WeatherApiResponse):ArrayList<Double>{
+        val list:ArrayList<Double> = arrayListOf()
+//        for(i in 0..5)
+//            response.daily.temperature2mMax.get(i).let { list.add(it) }
+        response.daily.temperature2mMin.forEach {
+            list.add(it)
+        }
+        return list
+    }
+
+    fun createPastMaxTempList(response:WeatherApiResponse):ArrayList<Double>{
+        val list:ArrayList<Double> = arrayListOf()
+//        for(i in 0..5)
+//            response.daily.temperature2mMax.get(i).let { list.add(it) }
+        response.daily.temperature2mMax.forEach {
+            list.add(it)
+        }
+        return list
+    }
+
+    fun createListOfDates():ArrayList<String>{
+        val list:ArrayList<String> = arrayListOf()
+        list.add(TimeUtils.today())
+        TimeUtils.secondDay()?.let { list.add(it) }
+        TimeUtils.thirdDay()?.let { list.add(it) }
+        TimeUtils.fourthDay()?.let { list.add(it) }
+        TimeUtils.endDate()?.let { list.add(it) }
+        return list
     }
 }
