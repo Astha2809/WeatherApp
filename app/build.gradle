@@ -51,4 +51,7 @@ dependencies {
 
     //viewmodel
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+
+    //fusedLocation
+    implementation 'com.google.android.gms:play-services-location:21.0.0'
 }
