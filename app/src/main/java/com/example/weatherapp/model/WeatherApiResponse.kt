@@ -14,7 +14,9 @@ data class WeatherApiResponse (
     @SerializedName("elevation"             ) var elevation            : Int?            = null,
     @SerializedName("current_weather"       ) var currentWeather       : CurrentWeather? = CurrentWeather(),
     @SerializedName("hourly_units"          ) var hourlyUnits          : HourlyUnits?    = HourlyUnits(),
-    @SerializedName("hourly"                ) var hourly               : Hourly?         = Hourly()
+    @SerializedName("hourly"                ) var hourly               : Hourly?         = Hourly(),
+    @SerializedName("daily_units"           ) var dailyUnits           : DailyUnits?     = DailyUnits(),
+    @SerializedName("daily"                 ) var daily                : Daily?          = Daily()
 
 )
 
@@ -38,5 +40,20 @@ data class Hourly (
 
     @SerializedName("time"           ) var time          : ArrayList<String> = arrayListOf(),
     @SerializedName("temperature_2m" ) var temperature2m : ArrayList<Double> = arrayListOf()
+
+)
+
+data class DailyUnits (
+
+    @SerializedName("time"               ) var time             : String? = null,
+    @SerializedName("temperature_2m_max" ) var temperature2mMax : String? = null,
+    @SerializedName("temperature_2m_min" ) var temperature2mMin : String? = null
+
+)
+data class Daily (
+
+    @SerializedName("time"               ) var time             : ArrayList<String> = arrayListOf(),
+    @SerializedName("temperature_2m_max" ) var temperature2mMax : ArrayList<Double> = arrayListOf(),
+    @SerializedName("temperature_2m_min" ) var temperature2mMin : ArrayList<Double>    = arrayListOf()
 
 )

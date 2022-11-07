@@ -6,7 +6,7 @@ import retrofit2.Response
 
 class WeatherRepository {
     private var webService: WebService = RetroInstance().getRetroFitInstanceForWeatherApi().create(WebService::class.java)
-     suspend fun getWeatherInfo(latitude:String, longitude:String): Response<WeatherApiResponse> =
-        webService.getCurrentTemperature(latitude,longitude)
+     suspend fun getWeatherInfo(latitude:String, longitude:String,startDate:String,endDate:String): Response<WeatherApiResponse> =
+        webService.getCurrentTemperature(latitude,longitude,startDate,endDate)
 
 }
