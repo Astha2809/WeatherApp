@@ -54,11 +54,12 @@ class WeatherViewModel:ViewModel() {
 
     fun createListOfDates():ArrayList<String>{
         val list:ArrayList<String> = arrayListOf()
-        list.add(TimeUtils.today())
+        //list.add(TimeUtils.today())
         TimeUtils.secondDay()?.let { list.add(it) }
         TimeUtils.thirdDay()?.let { list.add(it) }
         TimeUtils.fourthDay()?.let { list.add(it) }
-        TimeUtils.endDate()?.let { list.add(it) }
+        TimeUtils.fifthDay()?.let { list.add(it) }
+        TimeUtils.sixthDay()?.let { list.add(it) }
         return list
     }
 }

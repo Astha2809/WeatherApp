@@ -24,10 +24,11 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityMainBinding
     private lateinit var layoutManager: LinearLayoutManager
-    private  var weatherAdapter:WeatherAdapter= WeatherAdapter()
+    private var weatherAdapter: WeatherAdapter = WeatherAdapter()
     private val weatherViewModel: WeatherViewModel by lazy {
         ViewModelProvider(this)[WeatherViewModel::class.java]
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityMainBinding.inflate(layoutInflater)
@@ -57,33 +58,42 @@ class MainActivity : AppCompatActivity() {
 
                     // getWeatherInfoFromRepo("52.52", "13.41")
                     TimeUtils.endDate()?.let {
-                        getWeatherInfoFromViewModel(
-                            location?.latitude.toString(),
-                            location?.longitude.toString(),
-                            TimeUtils.today(),
-                            it
-                        )
+                        TimeUtils.secondDay()?.let { it1 ->
+                            getWeatherInfoFromViewModel(
+                                location?.latitude.toString(),
+                                location?.longitude.toString(),
+                                it1,
+                                it
+                            )
+                        }
                     }
 
                 }
             }
-setUpRecyclerView()
+        setUpRecyclerView()
         setContentView(mBinding.root)
 
     }
 
 
-
-    private suspend fun getWeatherInfoFromViewModel(latitude: String, longitude: String, startDate:String, endDate:String) {
-        weatherViewModel.getWeatherInfoFromRepo(latitude, longitude,startDate, endDate)
+    private suspend fun getWeatherInfoFromViewModel(
+        latitude: String,
+        longitude: String,
+        startDate: String,
+        endDate: String
+    ) {
+        weatherViewModel.getWeatherInfoFromRepo(latitude, longitude, startDate, endDate)
         CoroutineScope(Dispatchers.Main).launch {
-            weatherViewModel.currentWeather.observe(this@MainActivity){response->
-                when(response){
-                    is Resource.Success->{
-                        val currentWeatherDetails=response.data?.currentWeather
-                        mBinding.tvCurrentTemp.text= "Current Temp:${currentWeatherDetails?.temperature.toString()}"
-                        mBinding.tvCurrentTime.text="Time:${currentWeatherDetails?.time.toString()}"
-                        mBinding.tvWindSpeed.text="Windspeed:${currentWeatherDetails?.windspeed.toString()}"
+            weatherViewModel.currentWeather.observe(this@MainActivity) { response ->
+                when (response) {
+                    is Resource.Success -> {
+                        val currentWeatherDetails = response.data?.currentWeather
+                        mBinding.tvCurrentTemp.text =
+                            "Current Temp:${currentWeatherDetails?.temperature.toString()}"
+                        mBinding.tvCurrentTime.text =
+                            "Time:${currentWeatherDetails?.time.toString()}"
+                        mBinding.tvWindSpeed.text =
+                            "Windspeed:${currentWeatherDetails?.windspeed.toString()}"
                         //response.data?.let { createPastTempList(it) }
                         response.data?.let { createPastMaxTempList(it) }
                             ?.let { weatherAdapter.addMaxTempData(it) }
@@ -91,49 +101,51 @@ setUpRecyclerView()
                             ?.let { weatherAdapter.addMinTempData(it) }
                         weatherAdapter.addListOfDates(createListOfDates())
                     }
-                    is Resource.Error->{
-                        Log.i("Error occured",response.message.toString())
+                    is Resource.Error -> {
+                        Log.i("Error occured", response.message.toString())
                     }
 
                     else -> {
-                        Log.i("Error occured","else")
+                        Log.i("Error occured", "else")
                     }
                 }
 
             }
         }
     }
-    private fun setUpRecyclerView(){
-        layoutManager= GridLayoutManager(this,4)
-        mBinding.rvWeatherPastDays.layoutManager=layoutManager
-        mBinding.rvWeatherPastDays.adapter=weatherAdapter
+
+    private fun setUpRecyclerView() {
+        layoutManager = GridLayoutManager(this, 4)
+        mBinding.rvWeatherPastDays.layoutManager = layoutManager
+        mBinding.rvWeatherPastDays.adapter = weatherAdapter
 
 
     }
-    fun createPastMaxTempList(response:WeatherApiResponse):ArrayList<Double>{
-        var list:ArrayList<Double> = arrayListOf()
+
+    fun createPastMaxTempList(response: WeatherApiResponse): ArrayList<Double> {
+        var list: ArrayList<Double> = arrayListOf()
 //        for(i in 0..5)
 //            response.daily.temperature2mMax.get(i).let { list.add(it) }
 //        response.daily.temperature2mMax.forEach {
 //            list.add(it)
 //        }
-        list=weatherViewModel.createPastMaxTempList(response)
+        list = weatherViewModel.createPastMaxTempList(response)
         return list
     }
 
-    fun createPastMinTempList(response:WeatherApiResponse):ArrayList<Double>{
-        var list:ArrayList<Double> = arrayListOf()
+    fun createPastMinTempList(response: WeatherApiResponse): ArrayList<Double> {
+        var list: ArrayList<Double> = arrayListOf()
 ////        for(i in 0..5)
 ////            response.daily.temperature2mMax.get(i).let { list.add(it) }
 //        response.daily.temperature2mMin.forEach {
 //            list.add(it)
 //        }
-       list= weatherViewModel.createPastMinTempList(response)
+        list = weatherViewModel.createPastMinTempList(response)
         return list
     }
 
-    fun createListOfDates():ArrayList<String>{
-        val list=weatherViewModel.createListOfDates()
+    fun createListOfDates(): ArrayList<String> {
+        val list = weatherViewModel.createListOfDates()
         return list
     }
 

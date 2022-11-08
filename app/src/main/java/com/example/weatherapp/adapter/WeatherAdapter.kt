@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.databinding.PastDaysItemsBinding
 
-class WeatherAdapter(): RecyclerView.Adapter<WeatherAdapter.WeatherViewHolder>() {
+class WeatherAdapter: RecyclerView.Adapter<WeatherAdapter.WeatherViewHolder>() {
     private var maxTempList: ArrayList<Double> = arrayListOf()
     private var minTempList: ArrayList<Double> = arrayListOf()
     private var dates : ArrayList<String> = arrayListOf()

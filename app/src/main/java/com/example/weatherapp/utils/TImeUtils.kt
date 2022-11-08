@@ -9,16 +9,22 @@ object TimeUtils {
         return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
     }
     fun endDate(): String? {
-       return addDays(today(),4)
+       return addDays(secondDay(),4)
     }
     fun secondDay():String?{
-        return addDays(today(),2)
+        return addDays(today(),1)
     }
     fun thirdDay():String?{
-        return addDays(today(),3)
+        return addDays(today(),2)
     }
     fun fourthDay():String?{
+        return addDays(today(),3)
+    }
+    fun fifthDay():String?{
         return addDays(today(),4)
+    }
+    fun sixthDay():String?{
+        return addDays(today(),5)
     }
     fun addDays(startDate: String?, numberOfDays: Int): String? {
         val dateFormat =
