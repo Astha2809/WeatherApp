@@ -6,6 +6,7 @@ import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.HorizontalScrollView
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
@@ -101,6 +102,7 @@ class MainActivity : AppCompatActivity() {
                         response.data?.let { createPastMinTempList(it) }
                             ?.let { weatherAdapter.addMinTempData(it) }
                         weatherAdapter.addListOfDates(createListOfDates())
+                        mBinding.progressCircular.visibility=View.GONE
                     }
                     is Resource.Error -> {
                         Log.i("Error occured", response.message.toString())
