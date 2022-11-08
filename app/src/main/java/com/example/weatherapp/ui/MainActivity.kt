@@ -6,6 +6,7 @@ import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.HorizontalScrollView
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -89,11 +90,11 @@ class MainActivity : AppCompatActivity() {
                     is Resource.Success -> {
                         val currentWeatherDetails = response.data?.currentWeather
                         mBinding.tvCurrentTemp.text =
-                            "Current Temp:${currentWeatherDetails?.temperature.toString()}"
+                            "Current Temp:${currentWeatherDetails?.temperature.toString()+"C"}"
                         mBinding.tvCurrentTime.text =
-                            "Time:${currentWeatherDetails?.time.toString()}"
+                            "Date:${TimeUtils.today()}"
                         mBinding.tvWindSpeed.text =
-                            "Windspeed:${currentWeatherDetails?.windspeed.toString()}"
+                            "Wind Speed:${currentWeatherDetails?.windspeed.toString()}"
                         //response.data?.let { createPastTempList(it) }
                         response.data?.let { createPastMaxTempList(it) }
                             ?.let { weatherAdapter.addMaxTempData(it) }
@@ -115,14 +116,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpRecyclerView() {
-        layoutManager = GridLayoutManager(this, 4)
+        layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         mBinding.rvWeatherPastDays.layoutManager = layoutManager
         mBinding.rvWeatherPastDays.adapter = weatherAdapter
 
 
     }
 
-    fun createPastMaxTempList(response: WeatherApiResponse): ArrayList<Double> {
+    private fun createPastMaxTempList(response: WeatherApiResponse): ArrayList<Double> {
         var list: ArrayList<Double> = arrayListOf()
 //        for(i in 0..5)
 //            response.daily.temperature2mMax.get(i).let { list.add(it) }
@@ -133,7 +134,7 @@ class MainActivity : AppCompatActivity() {
         return list
     }
 
-    fun createPastMinTempList(response: WeatherApiResponse): ArrayList<Double> {
+    private fun createPastMinTempList(response: WeatherApiResponse): ArrayList<Double> {
         var list: ArrayList<Double> = arrayListOf()
 ////        for(i in 0..5)
 ////            response.daily.temperature2mMax.get(i).let { list.add(it) }
@@ -144,7 +145,7 @@ class MainActivity : AppCompatActivity() {
         return list
     }
 
-    fun createListOfDates(): ArrayList<String> {
+    private fun createListOfDates(): ArrayList<String> {
         val list = weatherViewModel.createListOfDates()
         return list
     }

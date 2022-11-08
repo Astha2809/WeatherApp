@@ -12,9 +12,9 @@ class WeatherAdapter: RecyclerView.Adapter<WeatherAdapter.WeatherViewHolder>() {
     private var dates : ArrayList<String> = arrayListOf()
     lateinit var mBinding: PastDaysItemsBinding
     inner class WeatherViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(maxTemp: Double,minTemp:Double,dates:String, position: Int) {
-            mBinding.tvMaxTemp.text = maxTemp.toString()
-            mBinding.tvMinTemp.text= minTemp.toString()
+        fun bind(maxTemp: Double,minTemp:Double,dates:String) {
+            mBinding.tvMaxTemp.text = "Max Temp:${maxTemp}"+"C"
+            mBinding.tvMinTemp.text= "Min Temp:${minTemp}"+"C"
             mBinding.tvDates.text=dates
 
 
@@ -29,7 +29,7 @@ class WeatherAdapter: RecyclerView.Adapter<WeatherAdapter.WeatherViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: WeatherViewHolder, position: Int) {
-       holder.bind(maxTempList.get(position),minTempList.get(position),dates.get(position),position)
+       holder.bind(maxTempList.get(position),minTempList.get(position),dates.get(position))
     }
 
     override fun getItemCount(): Int {

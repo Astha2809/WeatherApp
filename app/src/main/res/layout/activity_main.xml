@@ -6,12 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:cardElevation="10dp"
         app:cardCornerRadius="20dp"
-        android:backgroundTint="#EA719A"
+        app:strokeColor="#FFEB3B"
+        app:strokeWidth="5dp"
         android:id="@+id/cv_current_temp_details"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,34 +24,35 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/tv_current_time"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textColor="@color/black"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textSize="24sp" />
 
         <TextView
             android:id="@+id/tv_current_temp"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:hint="Current temperature"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textColor="#272626"
+            android:textSize="20sp"
+            />
             <TextView
                 android:id="@+id/tv_wind_speed"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:hint="Wind Speed"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textColor="#272626"
+                android:textSize="20sp"
+                />
 
 
 <!--        <TextView-->
@@ -66,15 +68,14 @@
 <!--            app:layout_constraintTop_toBottomOf="@id/tv_current_temp"-->
 <!--            android:layout_marginTop="20dp"/>-->
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/rv_weather_past_days"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/cv_current_temp_details"
-        app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintTop_toBottomOf="@id/cv_current_temp_details"
         tools:listitem="@layout/past_days_items"/>
 
 
